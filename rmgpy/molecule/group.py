@@ -1881,6 +1881,19 @@ class Group(Graph):
                         return False
         return True
 
+    def has_wildcards(self):
+        """
+        This function is a Group level wildcards checker.
+
+        Returns a 'True' if any of the atoms in this group has wildcards.
+        """
+
+        for atom1 in self.atoms:
+            if atom1.has_wildcards():
+                return True
+
+        return False
+
     def standardize_atomtype(self):
         """
         This function changes the atomtypes in a group if the atom must
@@ -1901,9 +1914,7 @@ class Group(Graph):
         modified = False
 
         # If this atom or any of its ligands has wild cards, then don't try to standardize
-        if self.hasWildCards: return modified
-        for bond12, atom2 in self.bonds.items():
-            if atom2.has_wildcards: return modified
+        if self.has_wildcards(): return modified
 
         # list of :class:AtomType which are elements with more sub-divided atomtypes beneath them
         specifics = [elementLabel for elementLabel in allElements if elementLabel not in nonSpecifics]
