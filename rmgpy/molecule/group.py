@@ -1903,7 +1903,7 @@ class Group(Graph):
         # If this atom or any of its ligands has wild cards, then don't try to standardize
         if self.hasWildCards: return modified
         for bond12, atom2 in self.bonds.items():
-            if atom2.hasWildCards: return modified
+            if atom2.has_wildcards: return modified
 
         # list of :class:AtomType which are elements with more sub-divided atomtypes beneath them
         specifics = [elementLabel for elementLabel in allElements if elementLabel not in nonSpecifics]
@@ -1992,7 +1992,7 @@ class Group(Graph):
         for index, atom in enumerate(self.atoms):
             claimed_atom_type = atom.atomtype[0]
             # Do not perform is this atom has wildCards
-            if atom.hasWildCards:
+            if atom.has_wildcards:
                 continue
             elif claimed_atom_type is ATOMTYPES['CO'] or claimed_atom_type is ATOMTYPES['CS']:
                 for bond12 in atom.bonds.values():
