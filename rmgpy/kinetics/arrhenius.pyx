@@ -607,7 +607,7 @@ cdef class ArrheniusBM(KineticsModel):
             
             def kfcn(E0):
                 Vp = 2 * w0 * (2 * w0 + 2 * E0) / (2 * w0 - 2 * E0)
-                out = Ea - (w0 + dHrxn / 2.0) * (Vp - 2 * w0 + dHrxn) ** 2 / (Vp ** 2 - (2 * w0) ** 2 + dHrxn ** 2)
+                out = Ea - (w0 + dHrxn / 2.0) * (Vp - 2 * w0 + dHrxn) * (Vp - 2 * w0 + dHrxn) / (Vp * Vp - (2 * w0) * (2 * w0) + dHrxn * dHrxn)
                 return out
 
             if abs(dHrxn) > 4 * w0 / 10.0:
@@ -631,7 +631,7 @@ cdef class ArrheniusBM(KineticsModel):
                         Ea = dHrxn
                     else:
                         Vp = 2 * w0 * (2 * w0 + 2 * E0) / (2 * w0 - 2 * E0)
-                        Ea = (w0 + dHrxn / 2.0) * (Vp - 2 * w0 + dHrxn) ** 2 / (Vp ** 2 - (2 * w0) ** 2 + dHrxn ** 2)
+                        Ea = (w0 + dHrxn / 2.0) * (Vp - 2 * w0 + dHrxn) * (Vp - 2 * w0 + dHrxn) / (Vp * Vp - (2 * w0) * (2 * w0) + dHrxn * dHrxn)
 
                     out.append(lnA + np.log(T ** n * np.exp(-Ea / (8.314 * T))))
                 return out
