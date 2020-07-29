@@ -58,7 +58,7 @@ cdef class LiquidReactor(ReactionSystem):
     cdef public list const_spc_names
     cdef public list const_spc_indices
     cdef public dict initial_concentrations
-    cdef public list Trange
+    cdef public list Trange, Prange
     cdef public int n_sims
     cdef public dict sens_conditions
 
@@ -73,6 +73,7 @@ cdef class LiquidReactor(ReactionSystem):
             self.Trange = [Quantity(t) for t in T]
 
         self.P = Quantity(100000., 'kPa')  # Arbitrary high pressure (1000 Bar) to get reactions in the high-pressure limit!
+        self.Prange = None # This is a dummy vriable to ensure the collision limit violation check in main.py can be done correctly. DO NOT change it to other values.
         self.initial_concentrations = initial_concentrations  # should be passed in SI
         self.V = 0  # will be set from initial_concentrations in initialize_model
         self.constant_volume = True
